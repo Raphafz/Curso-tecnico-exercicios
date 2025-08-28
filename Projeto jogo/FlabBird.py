@@ -154,7 +154,35 @@ class Chao:
     def desenhar(self, tela):
         tela.blit(self.IMAGEM, (self.x1, self.y))
         tela.blit(self.IMAGEM, (self.x2, self.y))
-    
+#FUNÇÕES DO SISTEMA
+def gameOver(tela):
+    fonte = pygame.font.SysFont('arial',60)
+    texto_game_over = fonte.render('Game over', True,(255,0,0))
+    texto_retry = FONTE_PONTOS.render('Retry', True, (255,255,255))
+
+    #BOTÃO RETRY
+    botao_largura = 200
+    botao_altura = 60
+    botao_x = (TELA_LARGURA - botao_largura)//2
+    botao_y = (TELA_ALTURA - botao_altura)//2 + 50
+    botao_rect = pygame.Rect(botao_x, botao_y, botao_largura, botao_altura)
+
+    while True:
+        tela.blit(IMAGEM_BACKGROUND, (0,0))
+        tela.blit(texto_game_over,((TELA_LARGURA, - texto_game_over.get_width())//2, 200))
+
+        pygame.draw.rect(tela,(0,100,200), botao_rect)
+        tela.blit(texto_retry,(
+            botao_x + (botao_largura - texto_retry.get_width())// 2,
+            botao_y + (botao_largura - texto_retry.get_width())// 2,
+        ))
+        pygame.display.update()
+        
+        for evento in pygame.event.get():
+            if evento == pygame.QUIT():
+                quit()
+            
+
 def desenhar_tela(tela, passaros, canos, chao, pontos):
     tela.blit(IMAGEM_BACKGROUND, (0,0))
 
