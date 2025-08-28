@@ -9,9 +9,9 @@ IMAGEM_CANO = pygame.transform.scale2x(pygame.image.load(os.path.join('imgs','pi
 IMAGEM_CHAO = pygame.transform.scale2x(pygame.image.load(os.path.join('imgs','base.png')))
 IMAGEM_BACKGROUND =pygame.transform.scale2x(pygame.image.load(os.path.join('imgs','bg.png')))
 IMAGENS_PASSARO = [
-pygame.transform.scale2x(pygame.transform.load(os.path.join('imgs','bird1.png'))),
-pygame.transform.scale2x(pygame.transform.load(os.path.join('imgs','bird2.png'))),
-pygame.transform.scale2x(pygame.transform.load(os.path.join('imgs','bird3.png')))
+pygame.transform.scale2x(pygame.image.load(os.path.join('imgs','bird1.png'))),
+pygame.transform.scale2x(pygame.image.load(os.path.join('imgs','bird2.png'))),
+pygame.transform.scale2x(pygame.image.load(os.path.join('imgs','bird3.png')))
 ]
 
 pygame.font.init()
@@ -49,14 +49,14 @@ class Passaro:
             deslocamento = 16
         elif deslocamento < 0 :
             deslocamento -= 2
-        self.y = deslocamento
+        self.y += deslocamento
 
         #ANGULO DO PASSARO
         if deslocamento < 0 or self.y < (self.altura + 50):
             if self.angulo < self.ROTACAO_MAXIMA:
                 self.angulo = self.ROTACAO_MAXIMA
         else:
-            if self.angulo > 90 :
+            if self.angulo > -90 :
                 self.angulo -= self.VELOCIDADE_ROTACAO
     
     def desenhar(self, tela):
@@ -99,12 +99,12 @@ class Cano:
         self.altura = 0
         self.pos_topo = 0
         self.pos_base = 0
-        self.CANO_TOP = IMAGEM_CHAO
+        self.CANO_TOP = IMAGEM_CANO
         self.CANO_BASE = pygame.transform.flip(IMAGEM_CANO, False, True)
         self.passou = False
         self.definir_altura()
     
-    def definir_altura(self):
+    def definir_altura(self): 
         self.altura = random.randrange(50, 450)
         self.pos_base = self.altura - self.CANO_TOP.get_height()
         self.pos_topo = self.altura + self.DISTANCIA
@@ -217,6 +217,6 @@ def main():
             if (passaro.y + passaro.imagem.get_height()) > chao.y or passaro.y < 0 :
                 passaros.pop(i)
         
-        desenhar_tela(tela, passaros, canos, pontos)
+        desenhar_tela(tela, passaros, canos, chao, pontos)
 if __name__ == '__main__':
-    main()
+    main() 
