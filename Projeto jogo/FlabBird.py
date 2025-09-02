@@ -2,6 +2,8 @@ import pygame
 import os
 import random
 
+pygame.mixer.init()
+
 TELA_LARGURA = 500 
 TELA_ALTURA = 800
 
@@ -16,6 +18,13 @@ IMAGENS_PASSARO = [
  
 pygame.font.init()
 FONTE_PONTOS = pygame.font.SysFont('arial', 50)
+
+#FUNÇÃO DE TOCAR MUSICA
+def tocar_musica(arquivo, loop=True):
+    pygame.mixer.stop()
+    pygame.mixer.music.load(arquivo)
+    pygame.mixer.music.play(-1 if loop else 0)
+
 
 class Passaro:
     IMGS = IMAGENS_PASSARO
@@ -147,15 +156,17 @@ class Chao:
         self.x2 -= self.VELOCIDADE
     
         if self.x1 + self.LARGURA < 0 :
-            self.x1 = self.x1 + self.LARGURA
+            self.x1 = self.x2 + self.LARGURA
         if self.x2 + self.LARGURA < 0:
-            self.x2 = self.x2 + self.LARGURA
+            self.x2 = self.x1 + self.LARGURA
     
     def desenhar(self, tela):
         tela.blit(self.IMAGEM, (self.x1, self.y))
         tela.blit(self.IMAGEM, (self.x2, self.y))
 #FUNÇÕES DO SISTEMA
 def gameOver(tela):
+    tocar_musica(os.path.join(r'C:\Users\Tec\Documents\GitHub\Curso-tecnico-exercicios\Projeto jogo\sounds\gameover.ogg'), loop=True)
+
     fonte = pygame.font.SysFont('arial',60)
     texto_game_over = fonte.render('Game over', True,(255,0,0))
     texto_retry = FONTE_PONTOS.render('Retry', True, (255,255,255))
@@ -201,6 +212,8 @@ def desenhar_tela(tela, passaros, canos, chao, pontos):
     pygame.display.update()
 
 def main():
+    tocar_musica(os.path.join(r'C:\Users\Tec\Documents\GitHub\Curso-tecnico-exercicios\Projeto jogo\sounds\overflow.ogg'), loop=True)
+
     passaros = [Passaro(230,350)]
     chao = Chao (730)
     canos = [Cano(700)]
