@@ -174,7 +174,7 @@ def gameOver(tela):
         pygame.draw.rect(tela,(0,100,200), botao_rect)
         tela.blit(texto_retry, (
             botao_x + (botao_largura - texto_retry.get_width()) // 2,
-            botao_y + (botao_largura - texto_retry.get_width()) // 2,
+            botao_y + (botao_altura - texto_retry.get_height()) // 2,
         ))
         pygame.display.update()
         
